@@ -13,9 +13,15 @@
       <h1>Resultado</h1>
 
       <fieldset>
-        <legend><span class="number">1</span>Usuario</legend>
+        <legend><span class="number">1</span>Datos ingresados</legend>
         <label for="name">Nombre:</label>
-        <input type="text" id="name" name="name">
+        <input type="text" id="name" name="name" value="{{ info[0].capitalize() }}" readonly>
+
+        <label for="name">Descanso:</label>
+        <input type="text" id="name" name="rest_day" value="{{ option }}" readonly>
+
+        <label for="name">Fecha a consultar:</label>
+        <input type="text" id="name" name="date" value="{{ info[2] }}" readonly>
 
         <!-- <label for="mail">Email:</label>
         <input type="email" id="mail" name="user_email">
@@ -29,10 +35,14 @@
       </fieldset>
 
       <fieldset>
-        <legend><span class="number">2</span>Inicio</legend>
+        <legend><span class="number">2</span>Resultado</legend>
+
+        <label for="name">Descanso:</label>
+        <input type="text" id="name" name="date" value="{{ info[3] }}" readonly>
+
         <!-- <label for="bio">Biography:</label>
         <textarea id="bio" name="user_bio"></textarea> -->
-        <br>
+        <br><br>
         <center> <a href="{{ url_for('home') }}">Volver</a> </center>
       </fieldset>
 

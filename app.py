@@ -1,6 +1,9 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
+from rest_days import RestDays
 
 app = Flask(__name__)
+
+app.config['SECRET_KEY'] = '7110c8ae51a4b5af97be6534caef90e4bb9bdcb3380af008f90b23a5d1616bf319bc298105da20fe'
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
@@ -10,7 +13,16 @@ def home():
         day = request.form['day']
         date = request.form['date']
 
-        print(name, day, date)
+        rest_day = RestDays(name, day, date)
+        rest_day.run()
+        rest_day.get_other_date()
+
+        if rest_day.get_free_days():
+            rest = 'Descansas'
+        else:
+            rest = 'NO descansas'
+
+        session['data'] = (name.lower(), day, date, rest)
 
         return redirect(url_for('consultation', user=name.lower()))
 
@@ -19,7 +31,21 @@ def home():
 
 @app.route('/consulta/<user>')
 def consultation(user):
-    return render_template('consultation.html')
+
+    if 'data' in session:
+        data = session.get('data')
+    else:
+        return redirect(url_for('home'))
+
+    days = {'1': 'Termina hoy', '2': 'Termina mañana', '3': 'Término ayer', '4': 'Término antier'}
+    option = days[data[1]]
+
+    context = {
+        'info': data,
+        'option': option,
+    }
+
+    return render_template('consultation.html', **context)
 
 
 if __name__ == '__main__':
