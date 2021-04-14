@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from rest_days import RestDays
+import os
 
 app = Flask(__name__)
 
@@ -62,5 +63,8 @@ def consultation(user):
     return render_template('consultation.html', **context)
 
 
-if __name__ == '__main__':
-    app.run()
+# if __name__ == '__main__':
+#     app.run()
+
+port=os.environ["PORT"]
+app.run('0.0.0.0',  int(port), debug=False)
