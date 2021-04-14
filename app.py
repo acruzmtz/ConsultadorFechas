@@ -5,6 +5,17 @@ app = Flask(__name__)
 
 app.config['SECRET_KEY'] = '7110c8ae51a4b5af97be6534caef90e4bb9bdcb3380af008f90b23a5d1616bf319bc298105da20fe'
 
+
+@app.errorhandler(404)
+def not_found(error):
+    return "No encontramos lo que buscas"
+
+
+@app.errorhandler(404)
+def not_found(error):
+    return "lo sentimos ha ocurrido un error, vuelve a intentar"
+
+
 @app.route('/', methods=['GET', 'POST'])
 def home():
 
@@ -52,4 +63,4 @@ def consultation(user):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
