@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 from rest_days import RestDays
 
 app = Flask(__name__)
@@ -14,8 +14,11 @@ def home():
         date = request.form['date']
 
         rest_day = RestDays(name, day, date)
-        rest_day.run()
-        rest_day.get_other_date()
+        rest_day.get_actual_date()
+
+        if not rest_day.get_other_date():
+            flash('Por favor ingresa una fecha correcta')
+            return redirect(url_for('home'))
 
         if rest_day.get_free_days():
             rest = 'Descansas'
